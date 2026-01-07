@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Register Student{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+    <div class="card shadow-lg border-0 rounded-3 overflow-hidden">
+    <div class="bg-black text-white p-4">
+        <h3 class="mb-1"></i>Register a new student</h3>
+    </div>
+
+<div class="card-body p-4">
+    <form method="POST">
+    {% csrf_token %}
+
+    <!--student-->
+    <h6 class="text-primary mb-3">Student Details</h6>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Student Name</label>
+            {{ form.name }}
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Email</label>
+            {{ form.email }}
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Date of Birth</label>
+            {{ form.dob }}
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Gender</label>
+            {{ form.gender }}
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Class</label>
+            {{ form.student_class }}
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Age</label>
+            {{ form.age }}
+        </div>
+
+        <div class="col-md-4">
+            <label class="form-label">Roll No</label>
+            {{ form.rollno }}
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <!--address-->
+    <h6 class="text-primary mb-3">Address Details</h6>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label class="form-label">City</label>
+            {{ form.city }}
+        </div>
+        
+        <div class="col-md-4">
+            <label class="form-label">State</label>
+            {{ form.state }}
+        </div>
+        
+        <div class="col-md-4">
+            <label class="form-label">Pincode</label>
+            {{ form.pincode }}
+        </div>
+        <div class="col-md-12">
+            <label class="form-label">House Address</label>
+            {{ form.address }}
+        </div>
+    </div>
+
+    <hr class="my-4">
+
+    <!--parent-->
+    <h6 class="text-primary mb-3">Parent / Guardian Details</h6>
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Parent Name</label>
+            {{ form.parent_name }}
+        </div>
+
+        <div class="col-md-6">
+            <label class="form-label">Parent Phone</label>
+            {{ form.parent_phone }}
+        </div>
+    </div>
+
+    <!--buttons-->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'students' %}" class="btn btn-outline-secondary">
+            View Students
+        </a>
+
+        <button class="btn btn-success px-4">
+            Register Student
+        </button>
+    </div>
+    </form>
+
+    </div>
+    </div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+</html>

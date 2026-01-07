@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Students{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+    <div class="card shadow p-4">
+        <div class="position-relative mb-4">
+            <h2 class="text-center">Registered Students</h2>
+
+            <a href="{% url 'export_students' %}" class="btn btn-success position-absolute top-0 end-0">
+                Export to Excel
+            </a>
+        </div>
+        <form method="GET" class="mb-3 d-flex">
+        <input
+        type="text"
+        name="search"
+        class="form-control me-2"
+        placeholder="Search by name, email, class, or roll no"
+        value="{{ search_query }}"
+        >
+        <button class="btn btn-primary">Search</button>
+    </form>
+    
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Roll No</th>
+            <th>Gender</th>
+            <th>DOB</th>
+            <th>Parent Phone</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for s in page_obj %}
+    <tr>
+        <td>
+        <a href="{% url 'student_detail' s.id %}" class="fw-semibold text-decoration-none">
+            {{ s.name }}
+        </a>
+        </td>
+        <td>{{ s.student_class }}</td>
+        <td>{{ s.rollno }}</td>
+        <td>{{ s.get_gender_display }}</td>
+        <td>
+            {% if s.dob %}
+                {{ s.dob|date:"d M Y" }}
+            {% else %}
+                <span class="text-muted">—</span>
+            {% endif %}
+        </td>
+        <td>{{ s.parent_phone|default:"—" }}</td>
+        <td>
+            <a href="{% url 'edit' s.id %}" class="btn btn-sm btn-warning">
+                Edit
+            </a>
+            <a href="{% url 'delete' s.id %}" 
+            class="btn btn-sm btn-danger"
+            onclick="return confirm('Delete this student?')">
+                Delete
+            </a>
+        </td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="7" class="text-center text-muted">
+            No students found
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+
+    <!--pagination-->
+    <nav>
+    <ul class="pagination justify-content-center">
+        
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link text-black" href="?page={{ page_obj.previous_page_number }}&search={{ search_query }}">
+            Previous
+        </a>
+        </li>
+        {% endif %}
+        
+        {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <li class="page-item active">
+            <span class="page-link bg-black">{{ num }}</span>
+        </li>
+        {% else %}
+        <li class="page-item">
+            <a class="page-link text-black" href="?page={{ num }}&search={{ search_query }}">{{ num }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link text-black" href="?page={{ page_obj.next_page_number }}&search={{ search_query }}">
+            Next
+            </a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+<a href="/" class="btn btn-primary w-100">Add New Student</a>
+</div>
+</div>
+{% endblock %}
+</html>

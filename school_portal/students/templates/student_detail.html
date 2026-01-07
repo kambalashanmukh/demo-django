@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Student Details{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <!-- Header -->
+        <div class="card-header bg-black text-white">
+            <h3 class="mb-0">Student Details </h3>
+        </div>
+
+        <!-- Body -->
+        <div class="card-body">
+
+            <h6 class="text-primary">Student Information</h6>
+            <p><strong>Name:</strong> {{ student.name }}</p>
+            <p><strong>Email:</strong> {{ student.email }}</p>
+            <p><strong>Date of Birth:</strong> {{ student.dob|default:"—" }}</p>
+            <p><strong>Gender:</strong> {{ student.get_gender_display }}</p>
+            <p><strong>Class:</strong> {{ student.student_class }}</p>
+            <p><strong>Age:</strong> {{ student.age }}</p>
+            <p><strong>Roll No:</strong> {{ student.rollno }}</p>
+
+            <hr>
+
+            <h6 class="text-primary">Address</h6>
+            <p>
+                {{ student.address|default:"—" }},
+                {{ student.city|default:"" }},
+                {{ student.state|default:"" }} –
+                {{ student.pincode|default:"" }}
+            </p>
+
+            <hr>
+            <h6 class="text-primary">Parent / Guardian</h6>
+            <p><strong>Name:</strong> {{ student.parent_name|default:"—" }}</p>
+            <p><strong>Phone:</strong> {{ student.parent_phone|default:"—" }}</p>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="card-footer d-flex justify-content-between">
+            <a href="{% url 'students' %}" class="btn btn-outline-secondary">
+                Back
+            </a>
+
+            <div>
+                <a href="{% url 'edit' student.id %}" class="btn btn-warning">
+                    Edit
+                </a>
+                <a href="{% url 'delete' student.id %}" 
+                   class="btn btn-danger"
+                   onclick="return confirm('Delete this student?')">
+                    Delete
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
