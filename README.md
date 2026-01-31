@@ -1,1 +1,1 @@
-Demo Django project for AWS deployment.
+Demo Django project for cloud deployment.
