@@ -7,7 +7,18 @@
     <div class="card shadow p-4">
         <div class="position-relative mb-4">
             <h2 class="text-center">Registered Students</h2>
-
+            <button onclick="backupDB()" class="btn btn-danger position-absolute top-0 end-1">
+              Backup Database
+            </button>
+            <script>
+            function backupDB(){
+              fetch("{% url 'backup_db' %}")
+              .then(response => response.json())
+              .then(data => {
+                alert("backup created successfully!");
+                });
+              }
+            </script>         
             <a href="{% url 'export_students' %}" class="btn btn-success position-absolute top-0 end-0">
                 Export to Excel
             </a>

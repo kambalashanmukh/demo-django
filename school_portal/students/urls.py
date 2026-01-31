@@ -1,8 +1,9 @@
 from django.urls import path
-from .views import register_student, student_list, edit_student, delete_student, student_detail, export_students_excel, login_view, logout_view
+from .views import register_student, student_list, edit_student, delete_student, student_detail, export_students_excel, login_view, logout_view, backup_db
 
 urlpatterns = [
     path('', register_student, name='register'),
+    path('backup/', backup_db, name='backup_db'),
     path('students/', student_list, name='students'),
     path('edit/<int:id>/', edit_student, name='edit'),
     path('delete/<int:id>/', delete_student, name='delete'),

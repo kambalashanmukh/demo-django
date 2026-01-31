@@ -1,13 +1,34 @@
+import os
+import subprocess
+import datetime
+from dotenv import load_dotenv
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Student
 from .forms import StudentForm
 from django.core.paginator import Paginator
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from openpyxl import Workbook
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+
+@login_required(login_url='login')
+def backup_db(request):
+    host= os.getenv("DB_HOST")
+    user= os.getenv("DB_USER")
+    database= os.getenv("DB_NAME")
+    timestamp= datetime.datetime.now().strftime("%d-%m-%Y")
+    filename = f"backup_{timestamp}.sql"
+    
+    command= [
+        "ssh",
+        f"shannu-1@{host}",
+        f"pg_dump -U {user} {database} -f ~/{filename}"
+    ]
+    subprocess.run(command)
+    return JsonResponse({"status":"success"})
 
 @login_required(login_url='login')
 def register_student(request):
